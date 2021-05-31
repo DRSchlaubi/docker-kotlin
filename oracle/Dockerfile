@@ -17,7 +17,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN curl -O yum.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/yum-3.4.3-168.el7.centos.noarch.rpm && \
+RUN curl -o yum.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/yum-3.4.3-168.el7.centos.noarch.rpm && \
     rpm -i yum.rpm && \
     yum install -y wget unzip && \
     cd /usr/lib && \
@@ -26,7 +26,8 @@ RUN curl -O yum.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/yum-3.4
     yum remove -y wget unzip && \
     yum clean -y all && \
     rm kotlin-compiler-*.zip && \
-    rm -f kotlinc/bin/*.bat
+    rm -f kotlinc/bin/*.bat && \
+    rm -f yum.rpm
 
 ENV PATH $PATH:/usr/lib/kotlinc/bin
 
