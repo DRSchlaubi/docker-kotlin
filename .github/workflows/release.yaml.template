@@ -1,0 +1,70 @@
+# Because GH actions sucks we can't have anchors therefore pls run this command to generate actions script
+# Cmd: yq eval 'explode(.)' .\release.yaml.template > release.yaml
+# Tool installation docs: https://mikefarah.gitbook.io/yq/#install
+on:
+  push:
+#    tags:
+#      - "**"
+#    branches-ignore:
+#      - "**"
+jobs:
+#  update_readme:
+#    name: "Update Readme"
+#    runs-on: ubuntu-20.04
+  jdk16:
+    name: "Build on JDK 16"
+    runs-on: ubuntu-20.04
+    env:
+      JDK_TAG: 16
+    steps: &release_version
+      - name: Retrieve version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      - name: Build Oracle
+        env: &release_env
+          KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
+          TAG: ${{ env.KOTLIN_VERSION }}
+          ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}"
+          DOCKER_ACCOUNT: ${{ secrets.$DOCKER_ACCOUNT }}
+          DOCKER_PASSWORD: ${{ secrets.$DOCKER_PASSWORD }}
+          SOURCE: "openjdk:${{env.JDK_TAG}}"
+          BUILD_CONTEXT: "oracle"
+        run: &build_image "scripts/build.sh"
+      - name: Build with Debian
+        env:
+          <<: *release_env
+          TAG: "${{ env.KOTLIN_VERSION }}-debian"
+          ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-debian"
+          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
+          BUILD_CONTEXT: "debian"
+        run: *build_image
+      - name: Build with Alpine
+        env:
+          <<: *release_env
+          TAG: "${{ env.KOTLIN_VERSION }}-alpine"
+          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
+          ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-alpine"
+          BUILD_CONTEXT: "alpine"
+        run: *build_image
+      - name: Build slim
+        env:
+          <<: *release_env
+          TAG: "${{ env.KOTLIN_VERSION }}-slim"
+          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
+          ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-slim"
+          BUILD_CONTEXT: "slim"
+        run: *build_image
+  jdk11:
+    name: "Build on JDK 11"
+    runs-on: ubuntu-20.04
+    env:
+      JAVA_VERSION: 11
+      JDK_NAME: 11
+    steps: *release_version
+  jdk8:
+    name: "Build on JDK 1.8"
+    runs-on: ubuntu-20.04
+    env:
+      JAVA_VERSION: 1.8
+      JDK_NAME: 8
+    steps: *release_version
