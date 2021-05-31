@@ -5,9 +5,9 @@ on:
 #    branches-ignore:
 #      - "**"
 jobs:
-  update_readme:
-    name: "Update Readme"
-    runs-on: ubuntu-20.04
+#  update_readme:
+#    name: "Update Readme"
+#    runs-on: ubuntu-20.04
   jdk16:
     name: "Build on JDK 16"
     runs-on: ubuntu-20.04
