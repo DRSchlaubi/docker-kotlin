@@ -17,6 +17,6 @@ jobs:
           distribution: 'adopt'
           java-version: 16
       - name: Gradle (RUN)
-        run: gradle --stacktrace --info --build-cache :release_notifier:run
+        run: cd tools && gradle --stacktrace --info --build-cache :release_notifier:run
       - name: Update Previous file
         run: "git diff --exit-code --quiet -- notify_kotlin_releases/previous.json || (git add notify_kotlin_releases/previous.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin HEAD)"
