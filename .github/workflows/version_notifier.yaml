@@ -11,14 +11,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: "main"
-      - name: Setup Java JDK 1.6
+      - name: Setup Java JDK 16
         uses: actions/setup-java@v2.1.0
         with:
           distribution: 'adopt'
           java-version: 16
       - name: Gradle (RUN)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.GITHUB_TOKEN }}
         run: cd tools && gradle --stacktrace --info --build-cache :release_notifier:run
       - name: Update Previous file
-        run: "git diff --exit-code --quiet -- notify_kotlin_releases/checked_versions.json || (git add notify_kotlin_releases/checked_versions.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin HEAD)"
+        run: "git diff --exit-code --quiet -- notify_kotlin_releases/checked_versions.json || (git add notify_kotlin_releases/checked_versions.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin main)"

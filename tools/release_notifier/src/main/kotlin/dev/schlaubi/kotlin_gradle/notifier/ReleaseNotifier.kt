@@ -34,7 +34,9 @@ val client = HttpClient {
 }
 
 suspend fun main() {
+    println("Fetching releases")
     findVersions().forEach { (_, name, url, preRelease, downloadUrl) ->
+        println("Creating issue for release: $name")
         val response = client.post<HttpResponse>(CREATE_ISSUE_ENDPOINT) {
             contentType(ContentType.Application.Json)
 
@@ -65,10 +67,13 @@ private suspend fun findVersions(): List<SavedKotlinVersion> {
             it.toSavedKotlinVersion(compiler)
         }.toList()
 
+    println("Update release fils")
     val file = Path("checked_versions.json")
     @Suppress("BlockingMethodInNonBlockingContext")
     file.writeText(json.encodeToString(versions))
     val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
 
-    return versions.filter { it !in previousVersions }
+    return versions.filter { it !in previousVersions }.also {
+        println("Found unhandled releases: $it")
+    }
 }
