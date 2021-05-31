@@ -17,17 +17,16 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN curl -o yum.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/yum-3.4.3-168.el7.centos.noarch.rpm && \
-    rpm -i yum.rpm && \
-    yum install -y wget unzip && \
+RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip-6.0-21.el7.x86_64.rpm && \
+    rpm -i unzip.rpm \
     cd /usr/lib && \
-    wget -q $COMPILER_URL && \
+    curl --remote-name $COMPILER_URL && \
     unzip kotlin-compiler-*.zip && \
     yum remove -y wget unzip && \
     yum clean -y all && \
     rm kotlin-compiler-*.zip && \
     rm -f kotlinc/bin/*.bat && \
-    rm -f yum.rpm
+    rm -f unzip.rpm
 
 ENV PATH $PATH:/usr/lib/kotlinc/bin
 
