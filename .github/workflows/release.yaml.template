@@ -25,8 +25,8 @@ jobs:
           KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
           TAG: ${{ env.KOTLIN_VERSION }}
           ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}"
-          DOCKER_ACCOUNT: ${{ secrets.$DOCKER_ACCOUNT }}
-          DOCKER_PASSWORD: ${{ secrets.$DOCKER_PASSWORD }}
+          DOCKER_ACCOUNT: ${{ secrets.DOCKER_ACCOUNT }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           SOURCE: "openjdk:${{env.JDK_TAG}}"
           BUILD_CONTEXT: "oracle"
         run: &build_image "scripts/build.sh"
