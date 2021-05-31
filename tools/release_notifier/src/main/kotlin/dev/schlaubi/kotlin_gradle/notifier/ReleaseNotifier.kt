@@ -28,18 +28,18 @@ val client = HttpClient {
     }
 
     defaultRequest {
-        header(HttpHeaders.Authorization, Config.GITHUB_TOKEN)
+        header(HttpHeaders.Authorization, "token ${Config.GITHUB_TOKEN}")
     }
 }
 
 suspend fun main() {
     findVersions().forEach { (_, name, url, preRelease, downloadUrl) ->
-        client.put(CREATE_ISSUE_ENDPOINT) {
+        client.post(CREATE_ISSUE_ENDPOINT) {
             contentType(ContentType.Application.Json)
 
             body = GithubIssue(
                 "⬆️ New Kotlin release $name",
-                "[Kotlin version $name]($url) has been released.${if (preRelease) "\n⚠ This is a pre-release." else ""}\\nCompiler: $downloadUrl",
+                "[Kotlin version $name]($url) has been released.${if (preRelease) "\n⚠ This is a pre-release." else ""}\nCompiler: $downloadUrl",
                 listOf("Kotlin release")
             )
         }
