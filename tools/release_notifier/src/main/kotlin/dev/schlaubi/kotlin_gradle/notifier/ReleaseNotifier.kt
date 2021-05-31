@@ -7,6 +7,7 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -34,7 +35,7 @@ val client = HttpClient {
 
 suspend fun main() {
     findVersions().forEach { (_, name, url, preRelease, downloadUrl) ->
-        client.post(CREATE_ISSUE_ENDPOINT) {
+        val response = client.post<HttpResponse>(CREATE_ISSUE_ENDPOINT) {
             contentType(ContentType.Application.Json)
 
             body = GithubIssue(
@@ -43,6 +44,8 @@ suspend fun main() {
                 listOf("Kotlin release")
             )
         }
+
+        println("Github API responded: ${response.readText()} Code: ${response.status} Headers: ${response.headers}")
     }
 }
 
