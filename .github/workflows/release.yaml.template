@@ -17,6 +17,7 @@ jobs:
     env:
       JDK_TAG: 16
     steps: &release_version
+      - uses: actions/checkout@v2
       - name: Retrieve version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
