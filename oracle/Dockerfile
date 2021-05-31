@@ -21,7 +21,7 @@ RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip
     rpm -i unzip.rpm && \
     cd /usr/lib && \
     curl -o kotlin.zip $COMPILER_URL && \
-    unzip kotlin.zip.zip && \
+    unzip kotlin.zip && \
     rm kotlin-compiler-*.zip && \
     rm -f kotlinc/bin/*.bat && \
     rm -f unzip.rpm
