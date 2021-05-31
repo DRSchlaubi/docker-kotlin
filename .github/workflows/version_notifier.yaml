@@ -21,4 +21,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd tools && gradle :release_notifier:run
       - name: Update Previous file
-        run: "git diff --exit-code --quiet -- notify_kotlin_releases/checked_versions.json || (git add notify_kotlin_releases/checked_versions.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin main)"
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update checked Kotlin version store
+
+          file_pattern: tools/release_notifier/checked_versions.json
