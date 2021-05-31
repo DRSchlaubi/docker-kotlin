@@ -17,16 +17,16 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN apt update && apt install -y --no-install-recommends wget unzip && \
-    rm -rf /var/lib/apt/lists/* && \
-    cd /usr/lib && \
-    wget -q $COMPILER_URL && \
-    unzip kotlin-compiler-*.zip && \
-    apt remove -y wget unzip && \
-    apt autoremove -y && \
-    apt autoclean -y && \
-    rm kotlin-compiler-*.zip && \
-    rm -f kotlinc/bin/*.bat
+RUN apt update && apt install -y --no-install-recommends wget unzip
+RUN rm -rf /var/lib/apt/lists/*
+RUN cd /usr/lib
+RUN wget -q $COMPILER_URL
+RUN unzip kotlin-compiler-*.zip
+RUN apt remove -y wget unzip
+RUN apt autoremove -y
+RUN apt autoclean -y
+RUN rm kotlin-compiler-*.zip
+RUN rm -f kotlinc/bin/*.bat
 
 ENV PATH $PATH:/usr/lib/kotlinc/bin
 

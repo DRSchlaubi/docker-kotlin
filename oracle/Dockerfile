@@ -17,14 +17,14 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip-6.0-21.el7.x86_64.rpm && \
-    rpm -i unzip.rpm && \
-    cd /usr/lib && \
-    curl -o kotlin.zip $COMPILER_URL && \
-    unzip kotlin.zip && \
-    rm kotlin-compiler-*.zip && \
-    rm -f kotlinc/bin/*.bat && \
-    rm -f unzip.rpm
+RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip-6.0-21.el7.x86_64.rpm
+RUN rpm -i unzip.rpm
+RUN cd /usr/lib
+RUN curl -o kotlin.zip $COMPILER_URL
+RUN unzip kotlin.zip
+RUN rm kotlin-compiler-*.zip
+RUN rm -f kotlinc/bin/*.bat
+RUN rm -f unzip.rpm
 
 ENV PATH $PATH:/usr/lib/kotlinc/bin
 
