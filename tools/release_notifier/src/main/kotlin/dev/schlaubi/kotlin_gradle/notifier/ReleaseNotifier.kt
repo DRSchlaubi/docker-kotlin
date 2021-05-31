@@ -49,6 +49,8 @@ suspend fun main() {
 
         println("Github API responded: ${response.readText()} Code: ${response.status} Headers: ${response.headers}")
     }
+
+    client.close()
 }
 
 private suspend fun findVersions(): List<SavedKotlinVersion> {
@@ -67,11 +69,11 @@ private suspend fun findVersions(): List<SavedKotlinVersion> {
             it.toSavedKotlinVersion(compiler)
         }.toList()
 
-    println("Update release fils")
+    println("Update release files")
     val file = Path("checked_versions.json")
+    val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
     @Suppress("BlockingMethodInNonBlockingContext")
     file.writeText(json.encodeToString(versions))
-    val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
 
     return versions.filter { it !in previousVersions }.also {
         println("Found unhandled releases: $it")
