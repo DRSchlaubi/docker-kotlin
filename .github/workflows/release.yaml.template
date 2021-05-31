@@ -29,7 +29,8 @@ jobs:
           ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}"
           DOCKER_ACCOUNT: ${{ secrets.DOCKER_ACCOUNT }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          SOURCE: "openjdk:${{env.JDK_TAG}}"
+          COMPILER_URL: "https://github.com/JetBrains/kotlin/releases/download/${{ steps.get_version.outputs.VERSION }}/kotlin-compiler-${{ steps.get_version.outputs.VERSION }}.zip"
+          SOURCE: "openjdk:${{env.JDK_TAG}}-oracle-jdk"
           BUILD_CONTEXT: "oracle"
         run: &build_image "scripts/build.sh"
       - name: Build with Debian
@@ -37,7 +38,7 @@ jobs:
           <<: *release_env
           TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
           ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-debian"
-          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
+          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:debian"
           BUILD_CONTEXT: "debian"
         run: *build_image
       - name: Build with Alpine
