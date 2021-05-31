@@ -32,4 +32,5 @@ jobs:
         with:
           commit_message: Update checked Kotlin version store
           commit_options: '-S' # sign commit
+          commit_author: Michael Rittmeister <michael@rittmeister.in>
           file_pattern: tools/release_notifier/checked_versions.json
