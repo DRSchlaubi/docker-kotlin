@@ -20,9 +20,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd tools && gradle :release_notifier:run
+      - name: Prepare git to sign commit
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Update Previous file
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update checked Kotlin version store
-
+          commit_options: '-S' # sign commit
           file_pattern: tools/release_notifier/checked_versions.json
