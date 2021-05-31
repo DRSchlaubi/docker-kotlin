@@ -3,7 +3,7 @@
 ### Supported tags and respective `Dockerfile` links
 
 ## 1.4 and earlier
-For 1.4 and earlier please check this repository: https://github.com/Zenika/docker-kotlin
+For 1.4 and earlier please check this repository: https://github.com/DRSchlaubi/docker-kotlin
 
 ### What is Kotlin
 

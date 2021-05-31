@@ -2,10 +2,27 @@
 
 docker image build \
   --pull \
-  -t $TAG \
-  --build-arg SOURCE=$SOURCE \
-  --build-arg CIRCLE_SHA1=$CIRCLE_SHA1 \
-  --build-arg TAG=$TAG \
-  --build-arg COMPILER_URL=$COMPILER_URL \
-  --build-arg CIRCLE_BUILD_DATE=$(date -Ins --utc) \
-  $BUILD_CONTEXT
+  -t "$TAG" \
+  --build-arg SOURCE="$SOURCE" \
+  --build-arg GITHUB_SHA="$GITHUB_SHA" \
+  --build-arg TAG="$TAG" \
+  --build-arg COMPILER_URL="$COMPILER_URL" \
+  --build-arg BUILD_DATE="$(date -Ins --utc)" \
+  "$BUILD_CONTEXT"
+
+for tag in $ADDITIONAL_TAGS; do
+  echo Tagging "$tag"
+  docker image tag "$TAG" "$tag"
+done
+
+docker images
+
+#echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
+
+#echo Pushing "$TAG"
+#docker image push "$TAG"
+#
+#for tag in $ADDITIONAL_TAGS; do
+#  echo Pushing "$tag"
+#  docker image push "$tag"
+#done
