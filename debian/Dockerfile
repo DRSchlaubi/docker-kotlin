@@ -18,6 +18,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.version=$TAG
 
 RUN cd /usr/lib && \
+    apt update && apt install -y --no-install-recommends wget unzip && \
     wget -q $COMPILER_URL && \
     unzip kotlin-compiler-*.zip && \
     rm kotlin-compiler-*.zip && \
