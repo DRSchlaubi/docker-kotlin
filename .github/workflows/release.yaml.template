@@ -22,39 +22,42 @@ jobs:
         id: get_version
 #        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
         run: echo ::set-output name=VERSION::$(echo "refs/tags/1.5.0" | cut -d / -f 3)
+      - name: Set java version
+        id: set_java
+        run: echo ::set-output name=JDK_TAG::$(echo $JDK_TAG)
       - name: Build Oracle
         env: &release_env
           KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
           TAG: ${{ steps.get_version.outputs.VERSION}}
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{steps.get_version.outputs.JDK_TAG}}"
           DOCKER_ACCOUNT: ${{ secrets.DOCKER_ACCOUNT }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           COMPILER_URL: "https://github.com/JetBrains/kotlin/releases/download/${{ steps.get_version.outputs.VERSION }}/kotlin-compiler-${{ steps.get_version.outputs.VERSION }}.zip"
-          SOURCE: "openjdk:${{env.JDK_TAG}}-oracle-jdk"
+          SOURCE: "openjdk:${{steps.get_version.outputs.JDK_TAG}}-oracle-jdk"
           BUILD_CONTEXT: "oracle"
         run: &build_image "scripts/build.sh"
       - name: Build with Debian
         env:
           <<: *release_env
           TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-debian"
-          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:debian"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{steps.get_version.outputs.JDK_TAG}}-debian"
+          SOURCE: "adoptopenjdk/openjdk${{steps.get_version.outputs.JDK_TAG}}:debian"
           BUILD_CONTEXT: "debian"
         run: *build_image
       - name: Build with Alpine
         env:
           <<: *release_env
           TAG: "${{ steps.get_version.outputs.VERSION }}-alpine"
-          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-alpine"
+          SOURCE: "adoptopenjdk/openjdk${{steps.get_version.outputs.JDK_TAG}}:alpine"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{steps.get_version.outputs.JDK_TAG}}-alpine"
           BUILD_CONTEXT: "alpine"
         run: *build_image
       - name: Build slim
         env:
           <<: *release_env
           TAG: "${{ steps.get_version.outputs.VERSION }}-slim"
-          SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-slim"
+          SOURCE: "adoptopenjdk/openjdk${{steps.get_version.outputs.JDK_TAG}}:alpine-slim"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{steps.get_version.outputs.JDK_TAG}}-slim"
           BUILD_CONTEXT: "slim"
         run: *build_image
   jdk11:
