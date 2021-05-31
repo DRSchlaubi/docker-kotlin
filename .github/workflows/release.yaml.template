@@ -21,7 +21,7 @@ jobs:
       - name: Retrieve version
         id: get_version
 #        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-        run: echo ::set-output name=VERSION::$(echo "1.5.0")
+        run: echo ::set-output name=VERSION::$(echo "refs/tags/1.5.0" | cut -d / -f 3)
       - name: Build Oracle
         env: &release_env
           KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
