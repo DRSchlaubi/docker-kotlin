@@ -28,7 +28,7 @@ val client = HttpClient {
     }
 
     defaultRequest {
-        header(HttpHeaders.Authorization, "Bearer ${Config.GITHUB_TOKEN}")
+        header(HttpHeaders.Authorization, Config.GITHUB_TOKEN)
     }
 }
 
@@ -63,8 +63,9 @@ private suspend fun findVersions(): List<SavedKotlinVersion> {
         }.toList()
 
     val file = Path("checked_versions.json")
-    val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
+    @Suppress("BlockingMethodInNonBlockingContext")
     file.writeText(json.encodeToString(versions))
+    val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
 
     return versions.filter { it !in previousVersions }
 }
