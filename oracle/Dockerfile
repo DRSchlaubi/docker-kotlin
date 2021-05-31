@@ -18,7 +18,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.version=$TAG
 
 RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip-6.0-21.el7.x86_64.rpm && \
-    rpm -i unzip.rpm \
+    rpm -i unzip.rpm && \
     cd /usr/lib && \
     curl --remote-name $COMPILER_URL && \
     unzip kotlin-compiler-*.zip && \
