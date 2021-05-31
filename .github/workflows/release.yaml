@@ -29,7 +29,6 @@ jobs:
         run: &build_image "scripts/build.sh"
       - name: Build with Debian
         env: *release_env
-          SOURCE: "debian"
           TAG: "${{ env.KOTLIN_VERSION }}-debian"
           ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-debian"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
