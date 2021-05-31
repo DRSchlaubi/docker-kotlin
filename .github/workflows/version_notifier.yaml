@@ -1,0 +1,20 @@
+on:
+  push:
+#  schedule:
+#    - cron: "0 * * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: "main"
+      - name: Setup Java JDK 1.6
+        uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 16
+      - name: Gradle (RUN)
+        run: gradle --stacktrace --info --build-cache run
+      - name: Update Previous file
+        run: "git diff --exit-code --quiet -- notify_kotlin_releases/previous.json || (git add notify_kotlin_releases/previous.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin HEAD)"
