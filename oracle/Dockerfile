@@ -17,7 +17,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN yum install -y wget unzip && \
+RUN rpm -q oraclelinux-release-el7 && \
+    yum install -y wget unzip && \
     cd /usr/lib && \
     wget -q $COMPILER_URL && \
     unzip kotlin-compiler-*.zip && \

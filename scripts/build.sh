@@ -2,7 +2,7 @@
 
 docker image build \
   --pull \
-  -t "kotlin:$TAG" \
+  -t "schlaubiboy/kotlin:$TAG" \
   --build-arg SOURCE="$SOURCE" \
   --build-arg GITHUB_SHA="$GITHUB_SHA" \
   --build-arg TAG="$TAG" \
