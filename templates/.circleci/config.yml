@@ -18,8 +18,8 @@ jobs:
       - run: curl https://api.github.com/repos/JetBrains/kotlin/releases > notify_kotlin_releases/current.json
       - run: node notify_kotlin_releases/filter-project
       - run: node notify_kotlin_releases/notify
-      - run: cp notify_kotlin_releases/current.json notify_kotlin_releases/previous.json
-      - run: "git diff --exit-code --quiet -- notify_kotlin_releases/previous.json || (git add notify_kotlin_releases/previous.json && git config user.name $GITHUB_ACCOUNT && git config user.email $GITHUB_EMAIL && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin HEAD)"
+      - run: cp notify_kotlin_releases/current.json notify_kotlin_releases/checked_versions.json
+      - run: "git diff --exit-code --quiet -- notify_kotlin_releases/checked_versions.json || (git add notify_kotlin_releases/checked_versions.json && git config user.name $GITHUB_ACCOUNT && git config user.email $GITHUB_EMAIL && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin HEAD)"
   
   build:
     parameters:

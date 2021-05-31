@@ -4,8 +4,6 @@ import dev.schlaubi.kotlin_gradle.GithubKotlinVersion
 import dev.schlaubi.kotlin_gradle.SavedKotlinVersion
 import io.ktor.client.*
 import io.ktor.client.features.*
-import io.ktor.client.features.auth.*
-import io.ktor.client.features.auth.providers.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
@@ -37,6 +35,8 @@ val client = HttpClient {
 suspend fun main() {
     findVersions().forEach { (_, name, url, preRelease, downloadUrl) ->
         client.put(CREATE_ISSUE_ENDPOINT) {
+            contentType(ContentType.Application.Json)
+
             body = GithubIssue(
                 "⬆️ New Kotlin release $name",
                 "[Kotlin version $name]($url) has been released.${if (preRelease) "\n⚠ This is a pre-release." else ""}\\nCompiler: $downloadUrl",
@@ -48,18 +48,21 @@ suspend fun main() {
 
 private suspend fun findVersions(): List<SavedKotlinVersion> {
     val versions = client.get<List<GithubKotlinVersion>>(RELEASES_ENDPOINT)
+        .asSequence()
         .filter { !it.draft }
-        .map {
+        .filter { it.assets.isNotEmpty() }
+        .mapNotNull {
             val compiler = it.assets.firstOrNull { version ->
                 version.name.contains("kotlin-compiler-")
             } ?: run {
-                error("Could not find compiler version. Available assets: ${it.assets}")
+                System.err.println("Could not find compiler asset for version ${it.name}. Available assets: ${it.assets}")
+                return@mapNotNull null
             }
 
             it.toSavedKotlinVersion(compiler)
-        }
+        }.toList()
 
-    val file = Path("previous.json")
+    val file = Path("checked_versions.json")
     val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
     file.writeText(json.encodeToString(versions))
 

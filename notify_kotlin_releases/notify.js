@@ -1,6 +1,6 @@
 const { request } = require('https')
 const { resolve } = require('path')
-const previous = require(resolve(__dirname, 'previous.json'))
+const previous = require(resolve(__dirname, 'checked_versions.json'))
 const current = require(resolve(__dirname, 'current.json'))
 const previousIds = previous.map(({ id }) => id)
 current
