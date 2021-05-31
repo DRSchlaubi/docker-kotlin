@@ -18,7 +18,7 @@ jobs:
           java-version: 16
       - name: Gradle (RUN)
         env:
-          GITHUB_TOKEN: ${{ github.GITHUB_TOKEN }}
-        run: cd tools && gradle --stacktrace --info --build-cache :release_notifier:run
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cd tools && gradle :release_notifier:run
       - name: Update Previous file
         run: "git diff --exit-code --quiet -- notify_kotlin_releases/checked_versions.json || (git add notify_kotlin_releases/checked_versions.json && git commit -m \":pushpin: Update Kotlin previous releases\" && git push origin main)"
