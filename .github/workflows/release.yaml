@@ -28,21 +28,24 @@ jobs:
           BUILD_CONTEXT: "oracle"
         run: &build_image "scripts/build.sh"
       - name: Build with Debian
-        env: *release_env
+        env:
+          <<: *release_env
           TAG: "${{ env.KOTLIN_VERSION }}-debian"
           ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-debian"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
           BUILD_CONTEXT: "debian"
         run: *build_image
       - name: Build with Alpine
-        env: *release_env
+        env:
+          <<: *release_env
           TAG: "${{ env.KOTLIN_VERSION }}-alpine"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
           ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-alpine"
-          BUILD_CONTEXT: "apline"
+          BUILD_CONTEXT: "alpine"
         run: *build_image
       - name: Build slim
-        env: *release_env
+        env:
+          <<: *release_env
           TAG: "${{ env.KOTLIN_VERSION }}-slim"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
           ADDITIONA_TAGS: "${{ env.KOTLIN_VERSION }}-${{env.JDK_TAG}}-slim"
