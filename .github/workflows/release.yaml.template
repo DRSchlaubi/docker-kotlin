@@ -46,7 +46,7 @@ jobs:
       - name: Update Previous file
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Update checked Kotlin version store
+          commit_message: Update README.md
           commit_options: '-S' # sign commit
           commit_author: Michael Rittmeister <michael@rittmeister.in>
           file_pattern: README.md
