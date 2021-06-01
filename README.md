@@ -5,8 +5,10 @@ Each image gets build for 3 JDK versions JDK8, JDK11 and JDK16 (or the latest re
 For each JDK version 4 different base images are used: oracle, debian, alpine, alpineslim
 
 Therefore, the tag names are structured in this way:
-schlaubiboy/kotlin:<kotlin-version>-jdk<version>-<os>
+schlaubiboy/kotlin:<kotlin-version>-jdk\<version>-\<os>
+
 The default jdk version is always the latest at the time of publishing the image so right not it is 16
+
 The default os is oracle so unlike other os images the oracle image is called `schlaubiboy/kotlin:<kotlin-version>-jdk<version>`
 
 ### Supported tags and respective `Dockerfile` links
