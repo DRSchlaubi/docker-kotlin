@@ -38,8 +38,8 @@ jobs:
         env:
           <<: *release_env
           ROOT_TAG: false
-          TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-debian"
+          ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
+          TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-debian"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:debian"
           BUILD_CONTEXT: "debian"
         run: *build_image
@@ -47,18 +47,18 @@ jobs:
         env:
           <<: *release_env
           ROOT_TAG: false
-          TAG: "${{ steps.get_version.outputs.VERSION }}-alpine"
+          ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-alpine"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-alpine"
+          TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-alpine"
           BUILD_CONTEXT: "alpine"
         run: *build_image
       - name: Build slim
         env:
           <<: *release_env
           ROOT_TAG: false
-          TAG: "${{ steps.get_version.outputs.VERSION }}-slim"
+          ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-slim"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-slim"
+          TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-slim"
           BUILD_CONTEXT: "slim"
         run: *build_image
   jdk11:
