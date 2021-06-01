@@ -15,11 +15,12 @@ docker image build \
   "$BUILD_CONTEXT"
 
 echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
+docker image push "$TAG"
 
 if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
   echo Tagging "$ADDITIONAL_TAG"
   docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
-  docker image push "$TAG"
+  docker image push "$ADDITIONAL_TAG"
 elif [ "$ROOT_TAG" = "true" ]; then
   if echo "$ADDITIONAL_TAG" | grep '-'; then
     echo Tagging "$ADDITIONAL_TAG"
