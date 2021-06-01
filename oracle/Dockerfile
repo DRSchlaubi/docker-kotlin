@@ -19,7 +19,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 RUN curl -o unzip.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/unzip-6.0-21.el7.x86_64.rpm
 RUN rpm -i unzip.rpm
-RUN cd /usr/lib
+WORKDIR /usr/lib
 RUN curl -L -o kotlin.zip $COMPILER_URL
 RUN unzip kotlin.zip
 RUN rm kotlin.zip

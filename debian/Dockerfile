@@ -17,7 +17,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="DRSchlaubi" \
       org.label-schema.version=$TAG
 
-RUN cd /usr/lib
+WORKDIR /usr/lib
 RUN apt update && apt install -y --no-install-recommends wget unzip
 RUN wget -q $COMPILER_URL
 RUN unzip kotlin-compiler-*.zip
