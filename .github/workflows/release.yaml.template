@@ -27,7 +27,7 @@ jobs:
         env: &release_env
           KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
           ADDITIONAL_TAG: ${{ steps.get_version.outputs.VERSION}}
-          TAG: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}"
+          TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}"
           DOCKER_ACCOUNT: ${{ secrets.DOCKER_ACCOUNT }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           COMPILER_URL: "https://github.com/JetBrains/kotlin/releases/download/v${{ steps.get_version.outputs.VERSION }}/kotlin-compiler-${{ steps.get_version.outputs.VERSION }}.zip"
@@ -37,25 +37,28 @@ jobs:
       - name: Build with Debian
         env:
           <<: *release_env
+          ROOT_TAG: false
           TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-debian"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-debian"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:debian"
           BUILD_CONTEXT: "debian"
         run: *build_image
       - name: Build with Alpine
         env:
           <<: *release_env
+          ROOT_TAG: false
           TAG: "${{ steps.get_version.outputs.VERSION }}-alpine"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-alpine"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-alpine"
           BUILD_CONTEXT: "alpine"
         run: *build_image
       - name: Build slim
         env:
           <<: *release_env
+          ROOT_TAG: false
           TAG: "${{ steps.get_version.outputs.VERSION }}-slim"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}-slim"
+          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-slim"
           BUILD_CONTEXT: "slim"
         run: *build_image
   jdk11:
