@@ -12,15 +12,13 @@ docker image build \
   --build-arg BUILD_DATE="$(date -Ins --utc)" \
   "$BUILD_CONTEXT"
 
-# We don't use posix
-# shellcheck disable=SC2039
-if [[ "$ADDITIONAL_TAG" == *"-"* ]]; then
-    echo Tagging "$ADDITIONAL_TAG"
-    docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
-  elif [ "$ROOT_TAG" == "true" ]; then
-    echo Tagging "$ADDITIONAL_TAG"
-    docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
-    docker image tag "$PUSH_TAG" "ghcr.io/drschlaubi/docker-kotlin/kotlin:$ADDITIONAL_TAG"
+if echo "$ADDITIONAL_TAG" | grep -q '-'; then
+  echo Tagging "$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
+elif [ "$ROOT_TAG" = "true" ]; then
+  echo Tagging "$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "ghcr.io/drschlaubi/docker-kotlin/kotlin:$ADDITIONAL_TAG"
 fi
 
 docker images
