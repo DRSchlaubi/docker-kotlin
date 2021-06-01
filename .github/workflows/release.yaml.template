@@ -17,6 +17,8 @@ jobs:
     env:
       JDK_TAG: 16
       ROOT_TAG: true
+      GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
+      GHCR_ACCOUNT: ${{ secrets.GHCR_ACCOUNT }}
     steps: &release_version
       - uses: actions/checkout@v2
       - name: Retrieve version

@@ -14,27 +14,22 @@ docker image build \
   --build-arg BUILD_DATE="$(date -Ins --utc)" \
   "$BUILD_CONTEXT"
 
+echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
+
 if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
   echo Tagging "$ADDITIONAL_TAG"
   docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
+  docker image push "$TAG"
 elif [ "$ROOT_TAG" = "true" ]; then
   if echo "$ADDITIONAL_TAG" | grep '-'; then
     echo Tagging "$ADDITIONAL_TAG"
     docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
+    docker image push "$REPO:$ADDITIONAL_TAG"
   else # only push root to ghcr
     docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
     docker image tag "$PUSH_TAG" "$GHCR_REPO:$ADDITIONAL_TAG"
+    docker image push "$REPO:$ADDITIONAL_TAG"
+    echo "$GHCR_PASSWORD" | docker login --username "$GHCR_ACCOUNT" --password-stdin
+    docker image push "$GHCR_REPO:$ADDITIONAL_TAG"
   fi
 fi
-
-docker images
-
-#echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
-
-#echo Pushing "$TAG"
-#docker image push "$TAG"
-#
-#for tag in $ADDITIONAL_TAGS; do
-#  echo Pushing "$tag"
-#  docker image push "$tag"
-#done
