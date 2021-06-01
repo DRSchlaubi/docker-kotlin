@@ -39,6 +39,7 @@ fun main() {
                     "alpine/Dockerfile",
                     "https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile",
                     "adoptopenjdk",
+                    "alpine",
                     "alpine"
                 )
                 appendLine()
@@ -48,6 +49,7 @@ fun main() {
                     "debian/Dockerfile",
                     "https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile",
                     "adoptopenjdk",
+                    "debian",
                     "debian"
                 )
                 appendLine()
@@ -57,7 +59,8 @@ fun main() {
                     "slim/Dockerfile",
                     "https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile",
                     "adoptopenjdk",
-                    "alpineslim"
+                    "alpineslim",
+                    "slim"
                 )
                 appendLine()
             }
