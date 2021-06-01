@@ -13,13 +13,14 @@ fun main() {
     val readme = root / "README.md"
     val versionsFile = tools / "release_notifier" / "checked_versions.json"
 
-    val versions =
+    val versionsRaw =
         Json.decodeFromString<List<SavedKotlinVersion>>(versionsFile.readText())
 
     val output = buildString {
-        val versions = versions.dropLast(17) // First 17 releases are on old repo and already handled
+        val versions = versionsRaw.dropLast(17) // First 17 releases are on old repo and already handled
         // Header
-        append("#### versions")
+        append("#### Versions")
+        appendLine()
         versions.forEach {
             append("- [").append(it.versionName).append("](#")
                 .append(it.versionName.lowercase().replace(".", ""))

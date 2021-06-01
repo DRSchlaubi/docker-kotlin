@@ -3,6 +3,9 @@
 # Cmd: yq eval 'explode(.)' .\release.yaml.template > release.yaml
 # Tool installation docs: https://mikefarah.gitbook.io/yq/#install
 on:
+  push:
+    branches:
+      - main
   release:
     types:
       - created
@@ -10,9 +13,10 @@ jobs:
   update_readme:
     name: "Update Readme"
     runs-on: ubuntu-20.04
-  - uses: actions/checkout@v2
-      with:
-        ref: "main"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: "main"
       - uses: actions/cache@v1
         with:
           path: |
