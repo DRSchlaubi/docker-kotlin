@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set "$PUSH_TAG" = "schlaubiboy/kotlin:$TAG"
+PUSH_TAG="schlaubiboy/kotlin:$TAG"
 
 docker image build \
   --pull \
