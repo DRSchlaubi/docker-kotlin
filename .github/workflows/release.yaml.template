@@ -2,11 +2,9 @@
 # Cmd: yq eval 'explode(.)' .\release.yaml.template > release.yaml
 # Tool installation docs: https://mikefarah.gitbook.io/yq/#install
 on:
-  push:
-    tags:
-      - "**"
-    branches-ignore:
-      - "**"
+  release:
+    types:
+      - created
 jobs:
 #  update_readme:
 #    name: "Update Readme"
