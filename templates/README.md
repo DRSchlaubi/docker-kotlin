@@ -25,7 +25,7 @@ Kotlin is a statically-typed programming language that runs on the Java virtual 
 
 See https://en.wikipedia.org/wiki/Kotlin_%28programming_language%29 for more information.
 
-![Kotlin Logo](https://github.com/DRSchlaubi/docker-kotlin/raw/master/Kotlin-logo.png)
+![Kotlin Logo](https://github.com/DRSchlaubi/docker-kotlin/raw/main/Kotlin-logo.png)
 
 ### Usage
 
@@ -48,4 +48,4 @@ See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kot
 %RELEASES%
 
 ### 1.4.20 and earlier
-For 1.4 and earlier please check this repository: https://github.com/DRSchlaubi/docker-kotlin
+For 1.4 and earlier please check this repository: https://github.com/Zenkikat/docker-kotlin
