@@ -37,7 +37,6 @@ jobs:
       - name: Build with Debian
         env:
           <<: *release_env
-          ROOT_TAG: false
           ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-debian"
           TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-debian"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:debian"
@@ -46,7 +45,6 @@ jobs:
       - name: Build with Alpine
         env:
           <<: *release_env
-          ROOT_TAG: false
           ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-alpine"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine"
           TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-alpine"
@@ -55,7 +53,6 @@ jobs:
       - name: Build slim
         env:
           <<: *release_env
-          ROOT_TAG: false
           ADDITIONAL_TAG: "${{ steps.get_version.outputs.VERSION }}-slim"
           SOURCE: "adoptopenjdk/openjdk${{env.JDK_TAG}}:alpine-slim"
           TAG: "${{ steps.get_version.outputs.VERSION }}-jdk${{env.JDK_TAG}}-slim"
