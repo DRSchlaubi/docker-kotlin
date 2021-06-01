@@ -16,6 +16,7 @@ docker image build \
 
 echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
 docker image push "$PUSH_TAG"
+docker image push "$REPO" # push latest
 
 if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
   echo Tagging "$ADDITIONAL_TAG"

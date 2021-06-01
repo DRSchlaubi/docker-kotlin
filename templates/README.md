@@ -1,8 +1,19 @@
-[![Docker Build Status](https://img.shields.io/docker/build/zenika/kotlin.svg)](https://hub.docker.com/r/zenika/kotlin/) [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/kotlin.svg)](https://hub.docker.com/r/zenika/kotlin/)
+[![Docker Build Status](https://img.shields.io/docker/build/DRSchlaubi/kotlin.svg)](https://hub.docker.com/r/DRSchlaubi/kotlin/) [![Docker Pulls](https://img.shields.io/docker/pulls/DRSchlaubi/kotlin.svg)](https://hub.docker.com/r/DRSchlaubi/kotlin/)
+
+### Image Variants
+Each image gets build for 3 JDK versions JDK8, JDK11 and JDK16 (or the latest release at the time of publishing the image).
+For each JDK version 4 different base images are used: oracle, debian, alpine, alpineslim
+
+Therefore, the tag names are structured in this way:
+schlaubiboy/kotlin:<kotlin-version>-jdk<version>-<os>
+The default jdk version is always the latest at the time of publishing the image so right not it is 16
+The default os is oracle so unlike other os images the oracle image is called `schlaubiboy/kotlin:<kotlin-version>-jdk<version>`
 
 ### Supported tags and respective `Dockerfile` links
-%version%
-## 1.4 and earlier
+
+%RELEASES%
+
+### 1.4.20 and earlier
 For 1.4 and earlier please check this repository: https://github.com/DRSchlaubi/docker-kotlin
 
 ### What is Kotlin
@@ -15,11 +26,11 @@ See https://en.wikipedia.org/wiki/Kotlin_%28programming_language%29 for more inf
 
 ### Usage
 
-Start using the Kotlin REPL : `docker container run -it --rm zenika/kotlin`
+Start using the Kotlin REPL : `docker container run -it --rm schlaubiboy/kotlin`
 
-See Kotlin compiler version : `docker container run -it --rm zenika/kotlin kotlinc -version`
+See Kotlin compiler version : `docker container run -it --rm schlaubiboy/kotlin kotlinc -version`
 
-See Kotlin compiler help : `docker container run -it --rm zenika/kotlin kotlinc -help`
+See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kotlinc -help`
 
 ### Reference
 
