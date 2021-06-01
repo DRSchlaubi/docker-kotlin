@@ -17,53 +17,63 @@ fun main() {
         Json.decodeFromString<List<SavedKotlinVersion>>(versionsFile.readText())
 
     val output = buildString {
-        versions
-            .dropLast(17) // First 17 releases are on old repo and already handled
-            .forEach {
-                val name = it.name.substringAfter("Kotlin ")
-                append("### $name")
-                appendLine()
+        val versions = versions.dropLast(17) // First 17 releases are on old repo and already handled
+        // Header
+        append("#### versions")
+        versions.forEach {
+            append("- [").append(it.versionName).append("](#")
+                .append(it.versionName.lowercase().replace(".", ""))
+                .append(')')
+            appendLine()
+        }
 
-                singleVariant(
-                    true,
-                    name,
-                    "oracle/Dockerfile",
-                    "https://github.com/DRSchlaubi/docker-kotlin/blob/main/oracle/Dockerfile",
-                    "openjdk",
-                    "-oracle"
-                )
-                appendLine()
-                singleVariant(
-                    true,
-                    name,
-                    "alpine/Dockerfile",
-                    "https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile",
-                    "adoptopenjdk",
-                    "alpine",
-                    "alpine"
-                )
-                appendLine()
-                singleVariant(
-                    true,
-                    name,
-                    "debian/Dockerfile",
-                    "https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile",
-                    "adoptopenjdk",
-                    "debian",
-                    "debian"
-                )
-                appendLine()
-                singleVariant(
-                    true,
-                    name,
-                    "slim/Dockerfile",
-                    "https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile",
-                    "adoptopenjdk",
-                    "alpineslim",
-                    "slim"
-                )
-                appendLine()
-            }
+        appendLine()
+
+        versions.forEach {
+            val name = it.versionName
+            append("### $name")
+            appendLine()
+
+            singleVariant(
+                true,
+                name,
+                "oracle/Dockerfile",
+                "https://github.com/DRSchlaubi/docker-kotlin/blob/main/oracle/Dockerfile",
+                "openjdk",
+                "-oracle"
+            )
+            appendLine()
+            singleVariant(
+                true,
+                name,
+                "alpine/Dockerfile",
+                "https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile",
+                "adoptopenjdk",
+                "alpine",
+                "alpine"
+            )
+            appendLine()
+            singleVariant(
+                true,
+                name,
+                "debian/Dockerfile",
+                "https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile",
+                "adoptopenjdk",
+                "debian",
+                "debian"
+            )
+            appendLine()
+            singleVariant(
+                true,
+                name,
+                "slim/Dockerfile",
+                "https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile",
+                "adoptopenjdk",
+                "alpineslim",
+                "slim"
+            )
+            appendLine()
+        }
     }
 
     val template = readmeTemplate.readText()
@@ -112,3 +122,6 @@ private fun StringBuilder.singleVariantSuffix(
         .codeBlock(from)
         .append(" tags")
 }
+
+val SavedKotlinVersion.versionName: String
+    get() = name.substringAfter("Kotlin ")
