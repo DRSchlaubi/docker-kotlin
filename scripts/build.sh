@@ -1,6 +1,8 @@
 #!/bin/sh
 
-PUSH_TAG="hub.docker.com/schlaubiboy/kotlin:$TAG"
+REPO="hub.docker.com/schlaubiboy/kotlin"
+GHCR_REPO="ghcr.io/drschlaubi/docker-kotlin/kotlin"
+PUSH_TAG="$REPO:$TAG"
 
 docker image build \
   --pull \
@@ -14,11 +16,11 @@ docker image build \
 
 if echo "$ADDITIONAL_TAG" | grep -q '-'; then
   echo Tagging "$ADDITIONAL_TAG"
-  docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
 elif [ "$ROOT_TAG" = "true" ]; then
   echo Tagging "$ADDITIONAL_TAG"
-  docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
-  docker image tag "$PUSH_TAG" "ghcr.io/drschlaubi/docker-kotlin/kotlin:$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
+  docker image tag "$PUSH_TAG" "$GHCR_REPO:$ADDITIONAL_TAG"
 fi
 
 docker images
