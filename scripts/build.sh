@@ -10,10 +10,8 @@ docker image build \
   --build-arg BUILD_DATE="$(date -Ins --utc)" \
   "$BUILD_CONTEXT"
 
-for tag in $ADDITIONAL_TAGS; do
-  echo Tagging "$tag"
-  docker image tag "$TAG" "$tag"
-done
+echo Tagging "$ADDITIONAL_TAGS"
+docker image tag "$TAG" "$ADDITIONAL_TAGS"
 
 docker images
 
