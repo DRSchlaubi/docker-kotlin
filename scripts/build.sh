@@ -1,6 +1,6 @@
 #!/bin/sh
 
-REPO="hub.docker.com/schlaubiboy/kotlin"
+REPO="schlaubiboy/kotlin"
 GHCR_REPO="ghcr.io/drschlaubi/docker-kotlin/kotlin"
 PUSH_TAG="$REPO:$TAG"
 
@@ -29,7 +29,7 @@ elif [ "$ROOT_TAG" = "true" ]; then
     docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
     docker image tag "$PUSH_TAG" "$GHCR_REPO:$ADDITIONAL_TAG"
     docker image push "$REPO:$ADDITIONAL_TAG"
-    echo "$GHCR_PASSWORD" | docker login --username "$GHCR_ACCOUNT" --password-stdin
+    echo "$GHCR_PASSWORD" | docker login ghcr.io --username "$GHCR_ACCOUNT" --password-stdin
     docker image push "$GHCR_REPO:$ADDITIONAL_TAG"
   fi
 fi
