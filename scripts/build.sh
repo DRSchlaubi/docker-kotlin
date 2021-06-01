@@ -18,7 +18,7 @@ if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
   echo Tagging "$ADDITIONAL_TAG"
   docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
 elif [ "$ROOT_TAG" = "true" ]; then
-  if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
+  if echo "$ADDITIONAL_TAG" | grep '-'; then
     echo Tagging "$ADDITIONAL_TAG"
     docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
   else # only push root to ghcr
