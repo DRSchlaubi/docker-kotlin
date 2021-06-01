@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       JDK_TAG: 16
+      ROOT_TAG: true
     steps: &release_version
       - uses: actions/checkout@v2
       - name: Retrieve version
@@ -25,8 +26,8 @@ jobs:
       - name: Build Oracle
         env: &release_env
           KOTLIN_VERSION: ${{ steps.get_version.outputs.VERSION }}
-          TAG: ${{ steps.get_version.outputs.VERSION}}
-          ADDITIONA_TAGS: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}"
+          ADDITIONAL_TAG: ${{ steps.get_version.outputs.VERSION}}
+          TAG: "${{ steps.get_version.outputs.VERSION }}-${{env.JDK_TAG}}"
           DOCKER_ACCOUNT: ${{ secrets.DOCKER_ACCOUNT }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           COMPILER_URL: "https://github.com/JetBrains/kotlin/releases/download/v${{ steps.get_version.outputs.VERSION }}/kotlin-compiler-${{ steps.get_version.outputs.VERSION }}.zip"
@@ -61,13 +62,13 @@ jobs:
     name: "Build on JDK 11"
     runs-on: ubuntu-20.04
     env:
-      JAVA_VERSION: 11
+      ROOT_TAG: false
       JDK_TAG: 11
     steps: *release_version
   jdk8:
     name: "Build on JDK 1.8"
     runs-on: ubuntu-20.04
     env:
-      JAVA_VERSION: 1.8
+      ROOT_TAG: false
       JDK_TAG: 8
     steps: *release_version

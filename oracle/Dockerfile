@@ -22,7 +22,7 @@ RUN rpm -i unzip.rpm
 RUN cd /usr/lib
 RUN curl -L -o kotlin.zip $COMPILER_URL
 RUN unzip kotlin.zip
-RUN rm kotlin-compiler-*.zip
+RUN rm kotlin-*.zip
 RUN rm -f kotlinc/bin/*.bat
 RUN rm -f unzip.rpm
 

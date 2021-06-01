@@ -1,8 +1,10 @@
 #!/bin/sh
 
+set "$PUSH_TAG" = "schlaubiboy/kotlin:$TAG"
+
 docker image build \
   --pull \
-  -t "schlaubiboy/kotlin:$TAG" \
+  -t "$PUSH_TAG" \
   --build-arg SOURCE="$SOURCE" \
   --build-arg GITHUB_SHA="$GITHUB_SHA" \
   --build-arg TAG="$TAG" \
@@ -10,8 +12,16 @@ docker image build \
   --build-arg BUILD_DATE="$(date -Ins --utc)" \
   "$BUILD_CONTEXT"
 
-echo Tagging "$ADDITIONAL_TAGS"
-docker image tag "$TAG" "$ADDITIONAL_TAGS"
+# We don't use posix
+# shellcheck disable=SC2039
+if [[ "$ADDITIONAL_TAG" == *"-"* ]]; then
+    echo Tagging "$ADDITIONAL_TAG"
+    docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
+  elif [ "$ROOT_TAG" == "true" ]; then
+    echo Tagging "$ADDITIONAL_TAG"
+    docker image tag "$PUSH_TAG" "$ADDITIONAL_TAG"
+    docker image tag "$PUSH_TAG" "ghcr.io/drschlaubi/docker-kotlin/kotlin:$ADDITIONAL_TAG"
+fi
 
 docker images
 
