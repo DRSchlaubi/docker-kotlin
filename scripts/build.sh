@@ -14,7 +14,7 @@ docker image build \
   --build-arg BUILD_DATE="$(date -Ins --utc)" \
   "$BUILD_CONTEXT"
 
-if echo "$ADDITIONAL_TAG" | grep -q '-'; then
+if echo "$ADDITIONAL_TAG" | grep 'jdk'; then
   echo Tagging "$ADDITIONAL_TAG"
   docker image tag "$PUSH_TAG" "$REPO:$ADDITIONAL_TAG"
 elif [ "$ROOT_TAG" = "true" ]; then
