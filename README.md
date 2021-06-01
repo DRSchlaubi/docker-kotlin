@@ -44,10 +44,9 @@ See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kot
 * Maintained by : https://schlau.bi
 
 ### Supported tags and respective `Dockerfile` links
-#### Versions
-- [1.5.0]()
 
-#### versions- [1.5.20-M1](#1520-m1)
+#### Versions
+- [1.5.20-M1](#1520-m1)
 - [1.5.10](#1510)
 - [1.5.0](#150)
 - [1.5.0-RC](#150-rc)
