@@ -3,14 +3,18 @@ package dev.schlaubi.kotlin_docker.readme_generator
 import dev.schlaubi.kotlin_gradle.SavedKotlinVersion
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.io.path.Path
-import kotlin.io.path.readText
-import kotlin.io.path.writeText
+import kotlin.io.path.*
 
 
 fun main() {
+    val root = Path(System.getProperty("user.dir")).absolute().parent.parent
+    val tools = root / "tools"
+    val readmeTemplate = root / "templates" / "README.md"
+    val readme = root / "README.md"
+    val versionsFile = tools / "release_notifier" / "checked_versions.json"
+
     val versions =
-        Json.decodeFromString<List<SavedKotlinVersion>>(Path("../release_notifier/checked_versions.json").readText())
+        Json.decodeFromString<List<SavedKotlinVersion>>(versionsFile.readText())
 
     val output = buildString {
         versions
@@ -59,9 +63,9 @@ fun main() {
             }
     }
 
-    val template = Path("../../templates/README.md").readText()
+    val template = readmeTemplate.readText()
     val newReadme = template.replace("%RELEASES%", output)
-    Path("../../README.md").writeText(newReadme)
+    readme.writeText(newReadme)
 }
 
 private fun StringBuilder.singleVariant(
@@ -94,13 +98,14 @@ private fun StringBuilder.singleVariantSuffix(
     dockerfile: String,
     vendor: String,
     from: String
-) =
+) {
     append('[')
         .append(dockerfileName)
         .append("](")
         .append(dockerfile)
         .append(") Based on ")
         .append(vendor)
-        .append(" '")
-        .append(from)
+        .append(' ')
+        .codeBlock(from)
         .append(" tags")
+}
