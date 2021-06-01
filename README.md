@@ -1,4 +1,4 @@
-[![Docker Build Status](https://img.shields.io/docker/build/DRSchlaubi/kotlin.svg)](https://hub.docker.com/r/DRSchlaubi/kotlin/) [![Docker Pulls](https://img.shields.io/docker/pulls/DRSchlaubi/kotlin.svg)](https://hub.docker.com/r/DRSchlaubi/kotlin/)
+[![Docker Build Status](https://github.com/DRSchlaubi/docker-kotlin/actions/workflows/release.yaml/badge.svg)](https://github.com/DRSchlaubi/docker-kotlin/actions/workflows/release.yaml) [![Docker Pulls](https://img.shields.io/docker/pulls/schlaubiboy/kotlin)](https://hub.docker.com/r/DRSchlaubi/kotlin/)
 
 ### Image Variants
 Each image gets build for 3 JDK versions JDK8, JDK11 and JDK16 (or the latest release at the time of publishing the image).
