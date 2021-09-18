@@ -15,12 +15,10 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 16
-      - uses: gradle/gradle-build-action@v1
+      - name: Gradle (RUN)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          build-root-directory: ./tools
-          arguments: :release_notifier:run
+        run: cd tools && gradle :release_notifier:run
       - name: Prepare git to sign commit
         uses: crazy-max/ghaction-import-gpg@v3
         with:
