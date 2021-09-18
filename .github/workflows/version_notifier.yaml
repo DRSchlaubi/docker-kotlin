@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build-root-directory: tools
+          build-root-directory: ./tools
           arguments: :release_notifier:run
       - name: Prepare git to sign commit
         uses: crazy-max/ghaction-import-gpg@v3
