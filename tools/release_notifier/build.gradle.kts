@@ -26,3 +26,12 @@ dependencies {
 application {
     mainClass.set("dev.schlaubi.kotlin_gradle.notifier.ReleaseNotifierKt")
 }
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "16"
+            freeCompilerArgs = listOf("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi","-Xopt-in=kotlin.io.pathExperimentalPathApi")
+        }
+    }
+}
