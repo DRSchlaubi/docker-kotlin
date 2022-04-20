@@ -46,6 +46,7 @@ See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kot
 ### Supported tags and respective `Dockerfile` links
 
 #### Versions
+- [1.6.21](#1621)
 - [1.6.20](#1620)
 - [1.6.20-RC2](#1620-rc2)
 - [1.6.20-RC](#1620-rc)
@@ -57,8 +58,12 @@ See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kot
 - [1.6.0-RC2](#160-rc2)
 - [1.6.0-RC](#160-rc)
 - [1.6.0-M1](#160-m1)
-- [1.5.31](#1531)
 
+### 1.6.21
+- `1.6.21`, `1.6.21-jdk16`, `1.6.21-jdk11`, `1.6.21-jdk8` [oracle/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/oracle/Dockerfile) Based on openjdk `-oracle` tags
+- `1.6.21`, `1.6.21-jdk16-alpine`, `1.6.21-jdk11-alpine`, `1.6.21-jdk8-alpine` [alpine/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile) Based on adoptopenjdk `alpine` tags
+- `1.6.21`, `1.6.21-jdk16-debian`, `1.6.21-jdk11-debian`, `1.6.21-jdk8-debian` [debian/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile) Based on adoptopenjdk `debian` tags
+- `1.6.21`, `1.6.21-jdk16-slim`, `1.6.21-jdk11-slim`, `1.6.21-jdk8-slim` [slim/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile) Based on adoptopenjdk `alpineslim` tags
 ### 1.6.20
 - `1.6.20`, `1.6.20-jdk16`, `1.6.20-jdk11`, `1.6.20-jdk8` [oracle/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/oracle/Dockerfile) Based on openjdk `-oracle` tags
 - `1.6.20`, `1.6.20-jdk16-alpine`, `1.6.20-jdk11-alpine`, `1.6.20-jdk8-alpine` [alpine/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile) Based on adoptopenjdk `alpine` tags
@@ -114,11 +119,6 @@ See Kotlin compiler help : `docker container run -it --rm schlaubiboy/kotlin kot
 - `1.6.0-M1`, `1.6.0-M1-jdk16-alpine`, `1.6.0-M1-jdk11-alpine`, `1.6.0-M1-jdk8-alpine` [alpine/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile) Based on adoptopenjdk `alpine` tags
 - `1.6.0-M1`, `1.6.0-M1-jdk16-debian`, `1.6.0-M1-jdk11-debian`, `1.6.0-M1-jdk8-debian` [debian/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile) Based on adoptopenjdk `debian` tags
 - `1.6.0-M1`, `1.6.0-M1-jdk16-slim`, `1.6.0-M1-jdk11-slim`, `1.6.0-M1-jdk8-slim` [slim/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile) Based on adoptopenjdk `alpineslim` tags
-### 1.5.31
-- `1.5.31`, `1.5.31-jdk16`, `1.5.31-jdk11`, `1.5.31-jdk8` [oracle/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/oracle/Dockerfile) Based on openjdk `-oracle` tags
-- `1.5.31`, `1.5.31-jdk16-alpine`, `1.5.31-jdk11-alpine`, `1.5.31-jdk8-alpine` [alpine/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/alpine/Dockerfile) Based on adoptopenjdk `alpine` tags
-- `1.5.31`, `1.5.31-jdk16-debian`, `1.5.31-jdk11-debian`, `1.5.31-jdk8-debian` [debian/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/debian/Dockerfile) Based on adoptopenjdk `debian` tags
-- `1.5.31`, `1.5.31-jdk16-slim`, `1.5.31-jdk11-slim`, `1.5.31-jdk8-slim` [slim/Dockerfile](https://github.com/DRSchlaubi/docker-kotlin/blob/main/slim/Dockerfile) Based on adoptopenjdk `alpineslim` tags
 
 
 ### 1.4.20 and earlier
