@@ -1,19 +1,14 @@
-﻿# Because GH actions sucks we can't have anchors therefore pls run this command to generate actions script
-
+# Because GH actions sucks we can't have anchors therefore pls run this command to generate actions script
 # Please edit release.yaml.template instead of release.yaml and then run this command
-
 # Cmd: yq eval 'explode(.)' .\release.yaml.template > release.yaml
-
 # Tool installation docs: https://mikefarah.gitbook.io/yq/#install
-
 on:
   push:
     branches:
       - main
   release:
     types:
-      - released
-      - prereleased
+      - published
 jobs:
   update_readme:
     name: "Update Readme"
