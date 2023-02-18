@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.5.30"
-    kotlin("plugin.serialization") version "1.5.30"
+    kotlin("jvm") version "1.8.10"
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 group = "dev.schlaubi"
@@ -11,5 +11,5 @@ repositories {
 }
 
 dependencies {
-    api("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.2")
+    api("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.4.1")
 }

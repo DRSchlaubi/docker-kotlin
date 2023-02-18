@@ -14,12 +14,12 @@ repositories {
 
 dependencies {
     implementation(project(":"))
-    implementation("dev.schlaubi", "envconf", "1.0")
-    implementation(platform("io.ktor:ktor-bom:1.6.0"))
+    implementation("dev.schlaubi", "stdx-envconf", "1.2.1")
+    implementation(platform("io.ktor:ktor-bom:2.2.3"))
     implementation("io.ktor", "ktor-client-core")
     implementation("io.ktor", "ktor-client-okhttp")
-    implementation("io.ktor", "ktor-client-json")
-    implementation("io.ktor", "ktor-client-serialization")
+    implementation("io.ktor", "ktor-client-content-negotiation")
+    implementation("io.ktor", "ktor-serialization-kotlinx-json")
     implementation("io.ktor", "ktor-client-auth")
 }
 

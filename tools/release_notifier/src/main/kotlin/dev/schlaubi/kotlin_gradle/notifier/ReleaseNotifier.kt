@@ -2,18 +2,14 @@ package dev.schlaubi.kotlin_gradle.notifier
 
 import dev.schlaubi.kotlin_gradle.GithubKotlinVersion
 import dev.schlaubi.kotlin_gradle.SavedKotlinVersion
-import io.ktor.client.HttpClient
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readText
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-import io.ktor.http.contentType
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -31,8 +27,8 @@ val json = Json {
 }
 
 val client = HttpClient {
-    install(JsonFeature) {
-        serializer = KotlinxSerializer(json)
+    install(ContentNegotiation) {
+        json(json)
     }
 
     defaultRequest {
@@ -44,7 +40,7 @@ suspend fun main() {
     println("Fetching releases")
     findVersions().forEach { (_, name, url, preRelease, downloadUrl) ->
         createIssue(name, url, preRelease, downloadUrl)
-        createReleaseDraft(name, url, preRelease)
+        createReleaseDraft(name.substringAfterLast(" "), url, preRelease)
     }
 
     client.close()
@@ -75,17 +71,18 @@ private suspend fun createIssue(
 }
 
 private suspend fun postJson(url: String, body: Any) {
-    val response = client.post<HttpResponse>(url) {
+    val response = client.post(url) {
         contentType(ContentType.Application.Json)
 
-        this.body = body
+        setBody(body)
     }
 
-    println("Github API responded: ${response.readText()} Code: ${response.status} Headers: ${response.headers}")
+    println("Github API responded: ${response.bodyAsText()} Code: ${response.status} Headers: ${response.headers}")
 }
 
 private suspend fun findVersions(): List<SavedKotlinVersion> {
-    val versions = client.get<List<GithubKotlinVersion>>(RELEASES_ENDPOINT)
+    val versions = client.get(RELEASES_ENDPOINT)
+        .body<List<GithubKotlinVersion>>()
         .asSequence()
         .filter { !it.draft }
         .filter { it.assets.isNotEmpty() }
@@ -103,7 +100,6 @@ private suspend fun findVersions(): List<SavedKotlinVersion> {
     println("Update release files")
     val file = Path("checked_versions.json")
     val previousVersions = Json.decodeFromString<List<SavedKotlinVersion>>(file.readText())
-    @Suppress("BlockingMethodInNonBlockingContext")
     file.writeText(json.encodeToString(versions))
 
     return versions.filter { it !in previousVersions }.also {
